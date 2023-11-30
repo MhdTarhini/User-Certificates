@@ -31,21 +31,45 @@
 </template>
   
 <script>
+import axios from 'axios';
+import { useAxios } from '../API/queries';
+
 export default {
   name: 'LoginForm',
   data() {
     return {
       email: '',
       password: '',
+      validationErrors: {},
       isSubmitting: false,
     };
   },
+  created() {
+    if (localStorage.getItem('token') != "" && localStorage.getItem('token') != null) {
+      this.$router.push('/dashboard')
+    }
+  },
   methods: {
-    loginAction() {
+    async loginAction() {
       this.isSubmitting = true
-      let UserInfo = {
+      let userInfo = {
         email: this.email,
         password: this.password,
+      }
+      const { loginAPI } = useAxios();
+
+      try {
+        const response = await loginAPI(userInfo)
+        localStorage.setItem('token', response.data.token);
+        this.$router.push('/dashboard');
+      } catch (error) {
+        this.isSubmitting = false
+        if (error.response.data.errors != undefined) {
+          this.validationErrors = error.response.data.errors
+        }
+        if (error.response.data.error != undefined) {
+          this.validationErrors = error.response.data.error
+        }
       }
     }
   },

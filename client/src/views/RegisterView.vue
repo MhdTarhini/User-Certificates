@@ -1,8 +1,9 @@
 <script setup>
+import RegisterForm from '../components/RegisterForm.vue'
 </script>
 
 <template>
     <main>
-        <div>Register page</div>
+        <RegisterForm/>
     </main>
 </template>

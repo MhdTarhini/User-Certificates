@@ -31,7 +31,6 @@
 </template>
   
 <script>
-import axios from 'axios';
 import { useAxios } from '../API/queries';
 
 export default {

@@ -14,7 +14,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-         DB::table("certificates")->insert(([
+        DB::table("user_types")->insert(([
+            "type"=>"admin",
+        ]));
+        DB::table("user_types")->insert(([
+            "type"=>"user",
+        ]));
+        DB::table("certificates")->insert(([
             "name"=>"BS",
         ]));
         DB::table("certificates")->insert(([
@@ -30,8 +36,19 @@ class DatabaseSeeder extends Seeder
             'password'=>Hash::make('1234567'),
             'gender'=>"male",
             'blood_type'=>'O+',
+            "is_approved"=>1,
+            "last_login"=>null,
+            "user_type_id"=>1,
+        ]));
+        DB::table("users")->insert(([
+            'name'=>"joe",
+            'email'=>"joe@gmail.com",
+            'password'=>Hash::make('1234567'),
+            'gender'=>"male",
+            'blood_type'=>'A+',
             "is_approved"=>0,
-            "last_login"=>null
+            "last_login"=>null,
+            "user_type_id"=>2,
         ]));
     }
 }

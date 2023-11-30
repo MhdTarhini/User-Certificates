@@ -35,12 +35,40 @@
                                 </small>
                             </div>
                         </div>
+                        <div class="mb-3">
+                            <label for="bloodType" class="form-label">Blood Type</label>
+                            <select v-model="bloodType" class="form-select" id="bloodType" name="bloodType">
+                                <option value="">Select Blood Type</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B+">O+</option>
+                                <option value="B+">O-</option>
+                            </select>
+                            <div v-if="validationErrors.password" class="flex flex-col">
+                                <small class="text-danger">
+                                    {{ validationErrors?.bloodType[0] }}
+                                </small>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="gender" class="form-label">Gender</label>
+                            <select v-model="gender" class="form-select" id="gender" name="gender">
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                            <div v-if="validationErrors.password" class="flex flex-col">
+                                    <small class="text-danger">
+                                        {{ validationErrors?.gender[0] }}
+                                    </small>
+                            </div>
+                        </div>
                         <div class="d-grid gap-2">
                             <button :disabled="isSubmitting" @click="registerAction()" type="button"
                                 class="btn btn-primary btn-block">Register Now
                             </button>
-                            <p class="text-center">Have already an account <router-link to="/">Login here</router-link>
-                            </p>
+                            <p class="text-center">Have already an account <router-link to="/">Login here</router-link></p>
                         </div>
                     </form>
                 </div>
@@ -59,6 +87,8 @@ export default {
             name: '',
             email: '',
             password: '',
+            bloodType:   '',
+            gender:   '',
             validationErrors: {},
             isSubmitting: false,
         };
@@ -70,12 +100,18 @@ export default {
                 name: this.name,
                 email: this.email,
                 password: this.password,
+                bloodType: this.bloodType,
+                gender: this.gender,
             }
             const { registerAPI } = useAxios();
+            console.log(userInfo)
 
             try {
                 const response = await registerAPI(userInfo)
-                this.$router.push('/login')
+                const RegisterUser=await response.data
+                if(RegisterUser.status==="success"){
+                    this.$router.push('/login')
+                }
             } catch (error) {
                 this.isSubmitting = false
                 if (error.response.data.errors != undefined) {

@@ -47,7 +47,7 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'string|min:6',
-            'boold_type' => 'required|string|max:255',
+            'bloodType' => 'required|string|max:255',
             'gender' => 'required|string|max:255',
         ]);
 
@@ -55,7 +55,7 @@ class AuthController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->boold_type = $request->boold_type;
+        $user->blood_type = $request->bloodType;
         $user->gender = $request->gender;
         $user->is_approved = 0;
         $user->last_login = null;

@@ -5,29 +5,28 @@
         <div class="card-body">
           <h5 class="card-title mb-4">Sign In</h5>
           <form>
-                  <p v-if="Object.keys(validationErrors).length != 0" class='text-center '><small class='text-danger'>Invalid
-                      Email or Password</small></p>
-                  <div class="mb-3">
-                    <label htmlFor="email" class="form-label">
-                      Email address
-                    </label>
-                  <input v-model="email" type="email" class="form-control" id="email" name="email" />
-                </div>
-                <div class="mb-3">
-                    <label htmlFor="password" class="form-label">Password</label>
-                    <input v-model="password" type="password" class="form-control" id="password" name="password" />
-                  </div>
-                  <div class="d-grid gap-2">
-                    <button :disabled="isSubmitting" @click="loginAction()" type="button"
-                      class="btn btn-primary btn-block">Login</button>
-                    <p class="text-center">Don't have account?
+              <p v-if="Object.keys(validationErrors).length != 0" class='text-center '><small class='text-danger'>Invalid
+                  Email or Password</small></p>
+              <div class="mb-3">
+                <label htmlFor="email" class="form-label">
+                  Email address
+                </label>
+                <input v-model="email" type="email" class="form-control" id="email" name="email" />
+              </div>
+              <div class="mb-3">
+                <label htmlFor="password" class="form-label">Password</label>
+                <input v-model="password" type="password" class="form-control" id="password" name="password" />
+              </div>
+              <div class="d-grid gap-2">
+                <button :disabled="isSubmitting" @click="loginAction()" type="button"
+                  class="btn btn-primary btn-block">Login</button>
+                <p class="text-center">Don't have account?
                   <router-link to="/register">Register here </router-link>
-                  </p>
-                </div>
+                </p>
+              </div>
             </form>
           </div>
-        <
-/div>
+      </div>
     </div>
   </div>
 </template>

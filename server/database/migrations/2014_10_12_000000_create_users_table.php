@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('blood_type');
             $table->string('gender');
+            $table->boolean('is_approved');
+            $table->date('last_login')->nullable();
             $table->timestamps();
         });
     }

@@ -14,7 +14,7 @@
               </div>
             </div>
             <div class="d-grid gap-2">
-              <button :disabled="isSubmitting" type="submit" class="btn btn-primary btn-block">Add New</button>
+              <button :disabled="isSubmitting" type="submit" class="btn btn-primary btn-block">Save</button>
             </div>
           </form>
       </div>
@@ -64,10 +64,12 @@ export default {
       }
     },
     async addCertificateAction() {
-      this.isSubmitting = true;
+       const {addCertificateAPI}=useAxios()
+       this.isSubmitting = true;
       
       try {
-        
+        const response = await addCertificateAPI(this.formData[0])
+        console.log(response)
       } catch (error) {
         this.isSubmitting = false;
         if (error.response.data.errors !== undefined) {

@@ -30,10 +30,7 @@ export default {
   data() {
     return {
       formFields: [
-          { name: 'certificateType', label: 'Certificate Type', type: 'select', options: [
-              { label: 'Select Type', value: '' },
-            ]
-          },
+        { name: 'certificateType', label: 'Certificate Type', type: 'select', options: []},
         { name: 'name', label: 'Name', type: 'text' },
         { name: 'university', label: 'University', type: 'text' },
         { name: 'archievedDate', label: 'Archieved date', type: 'date' },
@@ -49,7 +46,23 @@ export default {
       isSubmitting: false,
     };
   },
+  created() {
+    this.getCertificateTypes();
+  },
   methods: {
+    async getCertificateTypes() {
+      const { getCertificateTypesAPI } = useAxios();
+      try {
+        const response = await getCertificateTypesAPI();
+        const certificateTypes = response.data;
+        this.formFields[0].options = certificateTypes.data.map(type => ({
+          label: type.name,
+          value: type.name,
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async addCertificateAction() {
       this.isSubmitting = true;
       

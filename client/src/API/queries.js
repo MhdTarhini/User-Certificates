@@ -23,10 +23,15 @@ export const useAxios = () => {
     const response = await authAxios.post(`/logout`)
     return response
   }
+  const getCertificateTypesAPI = async () => {
+    const response = await authAxios.get(`certificate/certificate_types`)
+    return response
+  }
 
   return {
     registerAPI,
     loginAPI,
-    logoutAPI
+    logoutAPI,
+    getCertificateTypesAPI
   }
 }

@@ -34,7 +34,6 @@ export default {
         { name: 'name', label: 'Name', type: 'text' },
         { name: 'university', label: 'University', type: 'text' },
         { name: 'archievedDate', label: 'Archieved date', type: 'date' },
-        
       ],
       formData: {
         name: '',

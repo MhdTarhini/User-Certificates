@@ -14,14 +14,14 @@ class UserCertificates extends Model
         'certificate_id',
     ];
 
-    protected $appends = ['certificate_name','user_Certificate_Details'];
+    protected $appends = ['certificate_name','user_certificate_details'];
     public function user()
     {
         return $this->hasMany(User::class,"id");
     }
     public function certificate()
     {
-        return $this->hasMany(Certificates::class,"id");
+        return $this->hasMany(Certificates::class,"id","certificate_id");
     }
     public function userCertificateDetails()
     {
@@ -30,7 +30,7 @@ class UserCertificates extends Model
 
     public function getCertificateNameAttribute(){
         $certificate = $this->certificate()->select('name')->first(); 
-        return $certificate->name;
+        return $certificate? $certificate->name : '';
     }
     public function getUserCertificateDetailsAttribute(){
         $certificate = $this->userCertificateDetails()->select('name','university','date_achieved')->first(); 

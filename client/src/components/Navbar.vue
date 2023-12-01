@@ -29,18 +29,7 @@ import { useAxios } from '../API/queries';
   
 export default {
   name: 'home page',
-  data() {
-    return {
-      user: {},
-    };
-  },
-  created() {
-    if(localStorage.getItem('token') == "" || localStorage.getItem('token') == null){
-      this.$router.push('/')
-    }
-  },
   methods: {
-      
       async logoutAction () {
         const {logoutAPI}=useAxios()
         try {

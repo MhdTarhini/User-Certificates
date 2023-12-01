@@ -10,34 +10,16 @@
 </template>
   
 <script>
-import { useAxios } from '../API/queries';
 import Navbar from '../components/Navbar.vue';
   
 export default {
     name: 'layout',
-    data() {
-        return {
-            user: {},
-        };
-    },
+    components: { Navbar },
     created() {
         if (localStorage.getItem('token') == "" || localStorage.getItem('token') == null) {
             this.$router.push('/');
         }
     },
-    methods: {
-        async logoutAction() {
-            const { logoutAPI } = useAxios();
-            try {
-                await logoutAPI();
-                localStorage.setItem('token', "");
-                this.$router.push('/');
-            }
-            catch (error) {
-                console.log(error);
-            }
-        }
-    },
-    components: { Navbar }
+    
 };
 </script>

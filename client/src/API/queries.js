@@ -38,9 +38,7 @@ export const useAxios = () => {
   }
 
   const deleteUserCertificates = async (certificateId) => {
-    const response = await authAxios.delete(
-      `/certificate/delete_user_certificates/${certificateId}`
-    )
+    const response = await authAxios.delete(`/certificate/delete_user_certificate/${certificateId}`)
     return response
   }
 

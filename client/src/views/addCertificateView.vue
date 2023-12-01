@@ -3,6 +3,6 @@
 
 <template>
     <main>
-        <div>certificates</div>
+        <div>add certificates</div>
     </main>
 </template>

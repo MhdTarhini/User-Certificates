@@ -3,6 +3,6 @@
 
 <template>
     <main>
-        <div>certificates</div>
+        <div>Edit profile</div>
     </main>
 </template>

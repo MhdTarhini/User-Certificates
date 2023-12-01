@@ -47,7 +47,7 @@ export default {
   },
   created() {
     if (localStorage.getItem('token')) {
-      this.$router.push('/dashboard');
+      this.$router.push('/v1');
     }
   },
   methods: {
@@ -60,7 +60,7 @@ export default {
         if (userLoginInfo.status === 'success') {
           localStorage.setItem('token', userLoginInfo.authorisation.token);
           const userType = userLoginInfo.user.user_type_id;
-          this.$router.push(userType === 1 ? '/admin' : '/dashboard');
+          this.$router.push(userType === 1 ? '/admin' : '/v1');
         } else {
           this.isSubmitting = false;
           this.validationErrors = { NotApproved: userLoginInfo.status };

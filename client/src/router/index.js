@@ -3,6 +3,9 @@ import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import DashboardView from '../views/DashboardView.vue'
 import AdminView from '../views/AdminView.vue'
+import LayoutView from '../views/LayoutView.vue'
+import EditProfileView from '../views/EditProfileView.vue'
+import addCertificateView from '../views/addCertificateView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,10 +21,31 @@ const router = createRouter({
       component: RegisterView
     },
     {
-      path: '/dashboard',
-      name: 'dashboard',
-      component: DashboardView
+      path: '/v1',
+      component: LayoutView,
+      children: [
+        {
+          path: '',
+          name: 'Dashboard',
+          component: DashboardView
+        },
+        {
+          path: '/add-certificate',
+          name: 'addCertificate',
+          component: addCertificateView
+        },
+        {
+          path: '/edit-profile',
+          name: 'EditProfile',
+          component: EditProfileView
+        }
+      ]
     },
+    // {
+    //   path: '/dashboard',
+    //   name: 'dashboard',
+    //   component: DashboardView
+    // },
     {
       path: '/admin',
       name: 'admin',

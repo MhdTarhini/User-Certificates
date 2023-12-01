@@ -46,4 +46,36 @@ class CertificatesController extends Controller
 
     }
 
+    function getUserCertificate(){
+
+        $userCertificatesAndDetails= UserCertificates::UserCertificates()->get();
+
+        return response()->json([
+        'status' => 'success',
+        'data'=>$userCertificatesAndDetails
+    ]);
+
+    }
+   function deleteUserCertificate($user_certificate_id)
+   {
+    $userCertificates = UserCertificates::find($user_certificate_id);
+
+    if (!$userCertificates) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'User certificate not found',
+        ]);
+    }
+
+    $userCertificates->userCertificateDetails()->delete();
+
+    $userCertificates->delete();
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'User certificate and details deleted successfully',
+    ]);
+
+    }
+
 }

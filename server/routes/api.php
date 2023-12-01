@@ -16,6 +16,8 @@ Route::group(["middleware" => "auth:api"], function(){
     Route::group(["prefix" => "certificate"], function(){
         Route::get("certificate_types", [CertificatesController::class, "getCertificateTypes"]);
         Route::post("add_certificate", [CertificatesController::class, "addCertificate"]);
+        Route::get("get_user_certificates", [CertificatesController::class, "getUserCertificate"]);
+        Route::delete("delete_user_certificate/{user_certificate_id?}", [CertificatesController::class, "deleteUserCertificate"]);
 });
 
 });

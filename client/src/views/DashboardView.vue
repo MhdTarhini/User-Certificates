@@ -7,7 +7,7 @@
           <h6 class="card-subtitle mb-2 text-body-secondary">{{ certificate.type }}</h6>
           <h6 class="card-subtitle mb-2 text-body-secondary">{{ certificate.university }}</h6>
           <h6 class="card-subtitle mb-2 text-body-secondary">{{ certificate.date }}</h6>
-          <button class="btn btn-danger" @click="deleteCertificate(index)">Delete</button>
+          <button class="btn btn-danger" @click="deleteCertificate(certificate.id)">Delete</button>
         </div>
       </div>
     </div>
@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import {useAxios} from '../API/queries'
+
 export default {
   name: "Dashboard",
   data() {
@@ -26,9 +28,23 @@ export default {
     this.fetchUserCertificates();
   },
   methods: {
-    fetchUserCertificates() {
+    async fetchUserCertificates() {
+        const {getUserCertificates}=useAxios()
+        try {
+            const response = await getUserCertificates();
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+        }
     },
-    deleteCertificate(index) {
+    
+    async deleteCertificate(certificateId) {
+        const {deleteUserCertificates}=useAxios()
+        try {
+            await deleteUserCertificates(certificateId);
+        } catch (error) {
+            console.log(error)
+        }
     },
   },
 };

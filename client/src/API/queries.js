@@ -27,8 +27,20 @@ export const useAxios = () => {
     const response = await authAxios.get(`/certificate/certificate_types`)
     return response
   }
+
   const addCertificateAPI = async (certificateDetails) => {
     const response = await authAxios.post(`/certificate/add_certificate`, certificateDetails)
+    return response
+  }
+  const getUserCertificates = async () => {
+    const response = await authAxios.get(`/certificate/get_user_certificates`)
+    return response
+  }
+
+  const deleteUserCertificates = async (certificateId) => {
+    const response = await authAxios.delete(
+      `/certificate/delete_user_certificates/${certificateId}`
+    )
     return response
   }
 
@@ -37,6 +49,8 @@ export const useAxios = () => {
     loginAPI,
     logoutAPI,
     getCertificateTypesAPI,
-    addCertificateAPI
+    addCertificateAPI,
+    getUserCertificates,
+    deleteUserCertificates
   }
 }

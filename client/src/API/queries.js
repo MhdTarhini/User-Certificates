@@ -9,8 +9,8 @@ export const useAxios = () => {
     headers: { Authorization: `Bearer ${token}` }
   })
 
-  const AddAndUpdateUserInfoAPI = async (userData) => {
-    const response = await authAxios.post(`/guest/register`, userData)
+  const AddAndUpdateUserInfoAPI = async (userData, mode) => {
+    const response = await authAxios.post(`/guest/register/${mode}`, userData)
     return response
   }
 

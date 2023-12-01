@@ -4,6 +4,6 @@ import UserDataForm from '../components/UserDataForm.vue'
 
 <template>
     <main>
-        <UserDataForm mode="update"/>
+        <UserDataForm mode="Update"/>
     </main>
 </template>

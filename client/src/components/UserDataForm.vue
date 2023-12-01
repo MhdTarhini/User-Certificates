@@ -16,7 +16,7 @@
               </div>
             </div>
             <div class="d-grid gap-2">
-              <button :disabled="isSubmitting" type="submit" class="btn btn-primary btn-block">{{ title }}</button>
+              <button :disabled="isSubmitting" type="submit" class="btn btn-primary btn-block">{{ this.mode }}</button>
               <p v-if="mode === 'register'" class="text-center">Have already an account <router-link to="/">Login here</router-link></p>
               
             </div>
@@ -71,13 +71,8 @@ export default {
       isSubmitting: false,
     };
   },
-  computed: {
-    title() {
-      return this.mode === 'register' ? 'Register' : 'Update Profile';
-    },
-  },
   created(){
-    if (this.mode === 'update') {
+    if (this.mode === 'Update') {
       this.user = JSON.parse(localStorage.getItem('user'));
       this.formData = {
         name: this.user?.name || '',
@@ -93,10 +88,12 @@ export default {
       const { AddAndUpdateUserInfoAPI } = useAxios();
       
       try {
-        const response = await AddAndUpdateUserInfoAPI(this.formData);
+        const response = await AddAndUpdateUserInfoAPI(this.formData,this.mode);
         const registerUser = await response.data;
         if (registerUser.status === "success") {
-          this.mode === 'register' && this.$router.push('/login');
+          this.mode === 'register' ? 
+          this.$router.push('/login') :
+          localStorage.setItem('user', JSON.stringify(registerUser.data));
         }
       } catch (error) {
         this.isSubmitting = false;

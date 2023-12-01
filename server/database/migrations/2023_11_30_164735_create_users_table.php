@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('blood_type');
             $table->string('gender');
             $table->boolean('is_approved');
-            $table->date('last_login')->nullable();
+            $table->dateTime('last_login')->nullable();
             $table->unsignedBigInteger('user_type_id');
             $table->foreign('user_type_id')->references('id')->on('user_types')->onDelete('cascade');
             $table->timestamps();

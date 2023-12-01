@@ -7,7 +7,7 @@ use App\Http\Controllers\CertificatesController;
 
 Route::group(["prefix" => "guest"], function(){
     Route::post("login", [AuthController::class, "login"]);
-    Route::post("register", [AuthController::class, "register"]);
+    Route::post("register/{mode?}", [AuthController::class, "register"]);
 });
 
 Route::group(["middleware" => "auth:api"], function(){

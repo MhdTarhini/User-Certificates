@@ -57,7 +57,7 @@ export default {
         const certificateTypes = response.data;
         this.formFields[0].options = certificateTypes.data.map(type => ({
           label: type.name,
-          value: type.name,
+          value: type.id,
         }));
       } catch (error) {
         console.log(error);
@@ -66,10 +66,15 @@ export default {
     async addCertificateAction() {
        const {addCertificateAPI}=useAxios()
        this.isSubmitting = true;
-      
       try {
-        const response = await addCertificateAPI(this.formData[0])
-        console.log(response)
+        await addCertificateAPI(this.formData)
+        this.formData = {
+        name: '',
+        university: '',
+        certificateType: '',
+        archievedDate: '',
+      };
+      this.isSubmitting = false;
       } catch (error) {
         this.isSubmitting = false;
         if (error.response.data.errors !== undefined) {

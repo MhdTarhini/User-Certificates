@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Certificates;
+use App\Models\UserCertificateDetails;
+use App\Models\UserCertificates;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CertificatesController extends Controller
 {
@@ -14,4 +17,33 @@ class CertificatesController extends Controller
             'data' => $certificate_types
         ]);
     }
+    public function addCertificate(Request $request) {
+
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'certificateType' => 'required',
+        'university' => 'required|string|max:255',
+        'archievedDate' => 'required|date',
+    ]);
+
+    $user = Auth::user();
+
+    $newUserCertificate = UserCertificates::create([
+        'user_id' => $user->id,
+        'certificate_id' => $request->certificateType,
+    ]);
+
+    $newUserCertificateDetails = UserCertificateDetails::create([
+        'user_certificate_id' => $newUserCertificate->id,
+        'name' => $request->name,
+        'university' => $request->university,
+        'date_achieved' => $request->archievedDate,
+    ]);
+
+    return response()->json([
+        'status' => 'success',
+    ]);
+
+    }
+
 }

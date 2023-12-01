@@ -24,11 +24,11 @@ export const useAxios = () => {
     return response
   }
   const getCertificateTypesAPI = async () => {
-    const response = await authAxios.get(`certificate/certificate_types`)
+    const response = await authAxios.get(`/certificate/certificate_types`)
     return response
   }
   const addCertificateAPI = async (certificateDetails) => {
-    const response = await authAxios.post(`certificate/add_certificate/${certificateDetails}`)
+    const response = await authAxios.post(`/certificate/add_certificate`, certificateDetails)
     return response
   }
 

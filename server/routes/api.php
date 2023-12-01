@@ -15,6 +15,7 @@ Route::group(["middleware" => "auth:api"], function(){
 
     Route::group(["prefix" => "certificate"], function(){
         Route::get("certificate_types", [CertificatesController::class, "getCertificateTypes"]);
+        Route::post("add_certificate", [CertificatesController::class, "addCertificate"]);
 });
 
 });

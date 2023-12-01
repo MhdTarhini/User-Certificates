@@ -1,10 +1,10 @@
 <template>
   <div class="row justify-content-md-center mt-5">
     <div class="col-4">
-      <div class="card">
+      <div :class="{ 'card': mode === 'register' }">
         <div class="card-body">
-          <h5 class="card-title mb-4">Register</h5>
-          <form @submit.prevent="registerAction">
+          <h5 class="card-title mb-4">{{ mode === 'register' ? 'Register' : 'Update Profile' }}</h5>
+          <form @submit.prevent="handleUserInfo">
             <div v-for="field in formFields" :key="field.name" class="mb-3">
               <label :for="field.name" class="form-label">{{ field.label }}</label>
               <select v-if="field.type === 'select'" v-model="formData[field.name]" :id="field.name" :name="field.name" class="form-select">
@@ -16,8 +16,9 @@
               </div>
             </div>
             <div class="d-grid gap-2">
-              <button :disabled="isSubmitting" type="submit" class="btn btn-primary btn-block">Register Now</button>
-              <p class="text-center">Have already an account <router-link to="/">Login here</router-link></p>
+              <button :disabled="isSubmitting" type="submit" class="btn btn-primary btn-block">{{ title }}</button>
+              <p v-if="mode === 'register'" class="text-center">Have already an account <router-link to="/">Login here</router-link></p>
+              
             </div>
           </form>
         </div>
@@ -31,6 +32,12 @@ import { useAxios } from '../API/queries';
 
 export default {
   name: 'RegisterForm',
+  props: {
+    mode: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       formFields: [
@@ -64,16 +71,32 @@ export default {
       isSubmitting: false,
     };
   },
+  computed: {
+    title() {
+      return this.mode === 'register' ? 'Register' : 'Update Profile';
+    },
+  },
+  created(){
+    if (this.mode === 'update') {
+      this.user = JSON.parse(localStorage.getItem('user'));
+      this.formData = {
+        name: this.user?.name || '',
+        email: this.user?.email || '',
+        bloodType: this.user?.blood_type || '',
+        gender: this.user?.gender || '',
+      };
+    }
+  },
   methods: {
-    async registerAction() {
+    async handleUserInfo() {
       this.isSubmitting = true;
-      const { registerAPI } = useAxios();
+      const { AddAndUpdateUserInfoAPI } = useAxios();
       
       try {
-        const response = await registerAPI(this.formData);
+        const response = await AddAndUpdateUserInfoAPI(this.formData);
         const registerUser = await response.data;
         if (registerUser.status === "success") {
-          this.$router.push('/login');
+          this.mode === 'register' && this.$router.push('/login');
         }
       } catch (error) {
         this.isSubmitting = false;

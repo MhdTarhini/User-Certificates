@@ -1,9 +1,9 @@
 <script setup>
-import RegisterForm from '../components/RegisterForm.vue'
+import UserDataForm from '../components/UserDataForm.vue'
 </script>
 
 <template>
     <main>
-        <RegisterForm/>
+        <UserDataForm mode="register"/>
     </main>
 </template>

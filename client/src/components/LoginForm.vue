@@ -57,8 +57,10 @@ export default {
       try {
         const response = await loginAPI(this.formData);
         const userLoginInfo = await response.data;
+        console.log(userLoginInfo)
         if (userLoginInfo.status === 'success') {
           localStorage.setItem('token', userLoginInfo.authorisation.token);
+          localStorage.setItem('user', JSON.stringify(userLoginInfo.user));
           const userType = userLoginInfo.user.user_type_id;
           this.$router.push(userType === 1 ? '/admin' : '/v1');
         } else {

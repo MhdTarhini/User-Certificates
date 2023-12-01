@@ -1,8 +1,9 @@
 <script setup>
+import UserDataForm from '../components/UserDataForm.vue'
 </script>
 
 <template>
     <main>
-        <div>Edit profile</div>
+        <UserDataForm mode="update"/>
     </main>
 </template>

@@ -9,7 +9,7 @@ export const useAxios = () => {
     headers: { Authorization: `Bearer ${token}` }
   })
 
-  const registerAPI = async (userData) => {
+  const AddAndUpdateUserInfoAPI = async (userData) => {
     const response = await authAxios.post(`/guest/register`, userData)
     return response
   }
@@ -43,7 +43,7 @@ export const useAxios = () => {
   }
 
   return {
-    registerAPI,
+    AddAndUpdateUserInfoAPI,
     loginAPI,
     logoutAPI,
     getCertificateTypesAPI,

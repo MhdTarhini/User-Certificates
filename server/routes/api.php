@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -18,6 +19,10 @@ Route::group(["middleware" => "auth:api"], function(){
         Route::post("add_certificate", [CertificatesController::class, "addCertificate"]);
         Route::get("get_user_certificates", [CertificatesController::class, "getUserCertificate"]);
         Route::delete("delete_user_certificate/{user_certificate_id?}", [CertificatesController::class, "deleteUserCertificate"]);
+});
+    Route::group(["prefix" => "admin", "middleware" => "admin"], function(){
+        Route::get("users_report", [AdminController::class, "getUsersReport"]);
+        
 });
 
 });

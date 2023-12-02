@@ -70,4 +70,8 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(UserCertificates::class);
     }
 
+    public function scopeUsers($query){
+        return $query->where("user_type_id",2);
+    }
+
 }

@@ -21,7 +21,7 @@ Route::group(["middleware" => "auth:api"], function(){
         Route::delete("delete_user_certificate/{user_certificate_id?}", [CertificatesController::class, "deleteUserCertificate"]);
 });
     Route::group(["prefix" => "admin", "middleware" => "admin"], function(){
-        Route::get("users_report", [AdminController::class, "getUsersReport"]);
+        Route::get("get_users_report", [AdminController::class, "getUsersReport"]);
         
 });
 

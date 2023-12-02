@@ -42,6 +42,11 @@ export const useAxios = () => {
     return response
   }
 
+  const getUsersReportAPI = async () => {
+    const response = await authAxios.get(`/admin/get_users_report`)
+    return response
+  }
+
   return {
     AddAndUpdateUserInfoAPI,
     loginAPI,
@@ -49,6 +54,7 @@ export const useAxios = () => {
     getCertificateTypesAPI,
     addCertificateAPI,
     getUserCertificates,
-    deleteUserCertificates
+    deleteUserCertificates,
+    getUsersReportAPI
   }
 }

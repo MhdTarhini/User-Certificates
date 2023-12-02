@@ -15,4 +15,22 @@ class AdminController extends Controller
         'data' => $users_report,
     ]);
     }
+    public function approveUser($userId){
+        $user = User::find($userId);
+
+        if(!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'User not found'
+            ], 404);
+        }
+
+        $user->is_approved = 1;
+        $user->save();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $user
+        ]);
+    }
 }

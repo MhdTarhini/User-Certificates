@@ -47,7 +47,7 @@ export const useAxios = () => {
     return response
   }
   const approveUserAPI = async (userId) => {
-    const response = await authAxios.get(`/admin/apprve_user/${userId}`)
+    const response = await authAxios.get(`/admin/approve_user/${userId}`)
     return response
   }
 

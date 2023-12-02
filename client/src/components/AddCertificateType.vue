@@ -21,7 +21,8 @@ export default {
   name: "AddCertificateType",
   data() {
     return {
-      newCertificateType: "" 
+      newCertificateType: "" ,
+      certificates:[]
     };
   },
   methods: {
@@ -30,11 +31,12 @@ export default {
         try {
             const response = await addNewCertificateTypeAPI(this.newCertificateType)
             const newCertificate = await response.data;
+            this.$emit('certificateAdded', newCertificate.data);
             this.newCertificateType = '';
         } catch (error) {
-        console.error('Error adding certificate type:', error);
+        console.error(error);
         }
-    }
+    },
   }
 };
 </script>

@@ -11,7 +11,7 @@
       <tr v-for="certificate in certificates" :key="certificate.id">
         <td>{{ certificate.id }}</td>
         <td>{{ certificate.name }}</td>
-        <td>{{ certificate.email }}</td>
+        <td>{{ certificate.user_certificates_count }}</td>
         
       </tr>
     </tbody>
@@ -19,22 +19,11 @@
 </template>
 
 <script>
-import { useAxios } from '../API/queries';
-
 export default {
-  data() {
-    return {
-      certificates: [],
-    };
-  },
-  async created() {
-    const {getCertificatesReportAPI}=useAxios()
-    try {
-        const response = await getCertificatesReportAPI()
-        const certificatesReport=await response.data
-        this.certificates = certificatesReport.data
-    } catch (error) {
-        console.log(error)
+    props: {
+    certificates: {
+      type: Array,
+      required: true
     }
   },
 };
@@ -55,6 +44,4 @@ td {
 th {
   background-color: #f2f2f2;
 }
-
-
 </style>

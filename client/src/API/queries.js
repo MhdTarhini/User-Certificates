@@ -50,6 +50,10 @@ export const useAxios = () => {
     const response = await authAxios.get(`/admin/approve_user/${userId}`)
     return response
   }
+  const addNewCertificateTypeAPI = async (certificateType) => {
+    const response = await authAxios.get(`/admin/new_certificate_type/${certificateType}`)
+    return response
+  }
 
   return {
     AddAndUpdateUserInfoAPI,
@@ -60,6 +64,7 @@ export const useAxios = () => {
     getUserCertificates,
     deleteUserCertificates,
     getUsersReportAPI,
-    approveUserAPI
+    approveUserAPI,
+    addNewCertificateTypeAPI
   }
 }

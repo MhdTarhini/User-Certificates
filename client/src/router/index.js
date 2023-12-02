@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import DashboardView from '../views/DashboardView.vue'
-import AdminView from '../views/AdminView.vue'
+import AdminDashboardView from '../views/AdminDashboardView.vue'
 import LayoutView from '../views/LayoutView.vue'
 import EditProfileView from '../views/EditProfileView.vue'
 import AddCertificateView from '../views/addCertificateView.vue'
@@ -49,7 +49,7 @@ const router = createRouter({
         {
           path: '',
           name: 'AdminDashboard',
-          component: AdminView
+          component: AdminDashboardView
         },
         {
           path: '/certificates_report',

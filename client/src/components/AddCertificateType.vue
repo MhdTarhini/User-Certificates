@@ -28,9 +28,9 @@ export default {
       async addNewCertificateType() {
         const {addNewCertificateTypeAPI}=useAxios()
         try {
-        const response = await addNewCertificateTypeAPI(this.newCertificateType)
-        console.log(response.data);
-        this.newCertificateType = '';
+            const response = await addNewCertificateTypeAPI(this.newCertificateType)
+            const newCertificate = await response.data;
+            this.newCertificateType = '';
         } catch (error) {
         console.error('Error adding certificate type:', error);
         }

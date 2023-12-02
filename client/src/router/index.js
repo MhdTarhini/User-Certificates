@@ -6,6 +6,7 @@ import AdminView from '../views/AdminView.vue'
 import LayoutView from '../views/LayoutView.vue'
 import EditProfileView from '../views/EditProfileView.vue'
 import AddCertificateView from '../views/addCertificateView.vue'
+import CertificatesReportView from '../views/CertificatesReportView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -43,8 +44,24 @@ const router = createRouter({
     },
     {
       path: '/admin',
-      name: 'admin',
-      component: AdminView
+      component: LayoutView,
+      children: [
+        {
+          path: '',
+          name: 'AdminDashboard',
+          component: AdminView
+        },
+        {
+          path: '/certificates_report',
+          name: 'CertificatesReport',
+          component: CertificatesReportView
+        },
+        {
+          path: '/edit-profile',
+          name: 'EditProfile',
+          component: EditProfileView
+        }
+      ]
     }
   ]
 })

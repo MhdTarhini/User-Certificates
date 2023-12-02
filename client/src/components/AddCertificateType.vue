@@ -26,7 +26,7 @@ export default {
   },
   methods: {
       async addNewCertificateType() {
-        const {addNewCertificateType}=useAxios()
+        const {addNewCertificateTypeAPI}=useAxios()
         try {
         const response = await addNewCertificateTypeAPI(this.newCertificateType)
         console.log(response.data);

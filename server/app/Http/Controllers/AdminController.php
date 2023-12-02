@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Certificates;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -31,6 +32,16 @@ class AdminController extends Controller
         return response()->json([
             'status' => 'success',
             'data' => $user
+        ]);
+    }
+    public function addCertificateType($certificateType){
+        $addCertificate = new Certificates;
+        $addCertificate->name=$certificateType;
+        $addCertificate->save();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $addCertificate
         ]);
     }
 }

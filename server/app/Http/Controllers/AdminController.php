@@ -44,4 +44,12 @@ class AdminController extends Controller
             'data' => $addCertificate
         ]);
     }
+    public function getCertificatesReport(){
+        $certificateCounts = Certificates::withCount('userCertificates')->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data'=>$certificateCounts
+        ]);
+    }
 }

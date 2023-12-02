@@ -24,6 +24,7 @@ Route::group(["middleware" => "auth:api"], function(){
         Route::get("get_users_report", [AdminController::class, "getUsersReport"]);
         Route::get("approve_user/{userId?}", [AdminController::class, "approveUser"]);
         Route::get("new_certificate_type/{certificateType?}", [AdminController::class, "addCertificateType"]);
+        Route::get("certificate_report", [AdminController::class, "getCertificatesReport"]);
         
 });
 

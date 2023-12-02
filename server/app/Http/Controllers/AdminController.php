@@ -12,7 +12,7 @@ class AdminController extends Controller
 
         return response()->json([
         'status' => 'success',
-        'message' => $users_report,
+        'data' => $users_report,
     ]);
     }
 }

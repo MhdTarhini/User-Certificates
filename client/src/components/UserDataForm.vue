@@ -1,33 +1,39 @@
 <template>
-  <div class="row justify-content-md-center mt-5">
-    <div class="col-4">
-      <div :class="{ 'card': mode === 'Register' }">
-        <div class="card-body">
-          <h5 class="card-title mb-4" >{{ mode === 'Register' ? 'Register' : 'Update Profile' }}</h5>
-          <form @submit.prevent="handleUserInfo">
-            <div v-for="field in formFields" :key="field.name" class="mb-3">
-              <label :for="field.name" class="form-label">{{ field.label }}</label>
-              <select v-if="field.type === 'select'" v-model="formData[field.name]" :id="field.name" :name="field.name" class="form-select">
-                <option v-for="option in field.options" :key="option.value" :value="option.value">{{ option.label }}</option>
-              </select>
-              <input v-else-if="field.type === 'text' || field.type === 'password'" :type="field.type" v-model="formData[field.name]" :id="field.name" :name="field.name" class="form-control">
-              <div v-if="validationErrors[field.name]" class="flex flex-col">
+  <div class="row justify-content-md-center justify-content-center mt-5">
+  <form class="form" @submit.prevent="handleUserInfo">
+    <p class="title">{{ mode === 'Register' ? 'Register' : 'Update Profile' }}</p>
+    <p class="message">{{ mode === 'Register' ? 'Signup now and get full access to our app.' : 'Update your profile information.' }}</p>
+    <div v-for="field in formFields" :key="field.name" class="div">
+      <template v-if="field.type === 'text' || field.type === 'email' || field.type === 'password'" >
+        <label>
+          <input v-model="formData[field.name]" :type="field.type" placeholder="" class="input" :required="mode === 'Register' ? true : false">
+          <span>{{ field.label }}</span>
+        </label>
+        <div v-if="validationErrors[field.name]" class="flex flex-col">
                 <small class="text-danger">{{ validationErrors[field.name][0] }}</small>
               </div>
-            </div>
-            <div class="d-grid gap-2">
-              <button :disabled="isSubmitting" type="submit" class="btn btn-primary btn-block">{{ this.mode }}</button>
-              <p v-if="mode === 'Register'" class="text-center">Have already an account <router-link to="/">Login here</router-link></p>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
+      </template>
 
+      <template v-if="field.type === 'select'">
+        <label>
+          <select v-model="formData[field.name]" class="input" :required="true">
+            <option v-for="option in field.options" :key="option.value" :value="option.value">{{ option.label }}</option>
+          </select>
+          <span>{{ field.label }}</span>
+        </label>
+        
+      </template>
+    </div>
+
+    <button :disabled="isSubmitting" type="submit" class="submit">{{ mode }}</button>
+    <p v-if="mode === 'Register'" class="signin">Already have an account?<router-link to="/">Sign in</router-link></p>
+  </form>
+    </div>
+
+</template>
 <script>
 import { useAxios } from '../API/queries';
+
 
 export default {
   name: 'RegisterForm',
@@ -44,7 +50,6 @@ export default {
         { name: 'email', label: 'Email address', type: 'text' },
         { name: 'password', label: 'Password', type: 'password' },
         { name: 'bloodType', label: 'Blood Type', type: 'select', options: [
-            { label: 'Select Blood Type', value: '' },
             { label: 'A+', value: 'A+' },
             { label: 'A-', value: 'A-' },
             { label: 'B+', value: 'B+' },
@@ -53,7 +58,6 @@ export default {
           ]
         },
         { name: 'gender', label: 'Gender', type: 'select', options: [
-            { label: 'Select Gender', value: '' },
             { label: 'Male', value: 'male' },
             { label: 'Female', value: 'female' },
           ]
@@ -83,6 +87,7 @@ export default {
   },
   methods: {
     async handleUserInfo() {
+      const toast = useToast();
       this.isSubmitting = true;
       const { AddAndUpdateUserInfoAPI } = useAxios();
       
@@ -90,6 +95,7 @@ export default {
         const response = await AddAndUpdateUserInfoAPI(this.formData,this.mode);
         const registerUser = await response.data;
         if (registerUser.status === "success") {
+          toast.success('You did it!');
           this.mode === 'Register' ? 
           this.$router.push('/') :
           localStorage.setItem('user', JSON.stringify(registerUser.data));
@@ -105,3 +111,148 @@ export default {
 };
 </script>
 
+<style>
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 400px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  position: relative;
+}
+.div{
+   position: relative;
+}
+.title {
+  font-size: 28px;
+  color: royalblue;
+  font-weight: 600;
+  letter-spacing: -1px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 30px;
+}
+
+.title::before,.title::after {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  left: 0px;
+  background-color: royalblue;
+}
+
+.title::before {
+  width: 18px;
+  height: 18px;
+  background-color: royalblue;
+}
+
+.title::after {
+  width: 18px;
+  height: 18px;
+  animation: pulse 1s linear infinite;
+}
+
+.message, .signin {
+  color: rgba(88, 87, 87, 0.822);
+  font-size: 14px;
+}
+
+.signin {
+  text-align: center;
+}
+
+.signin a {
+  color: royalblue;
+}
+
+.signin a:hover {
+  text-decoration: underline royalblue;
+}
+
+.flex {
+  display: flex;
+  width: 100%;
+  gap: 6px;
+}
+
+.form label {
+  width: 100%;
+
+}
+
+.form label .input {
+  width: 100%;
+  padding: 10px 10px 20px 10px;
+  outline: 0;
+  border: 1px solid rgba(105, 105, 105, 0.397);
+  border-radius: 10px;
+}
+
+.form label .input + span {
+  position: absolute;
+  left: 10px;
+  top: 15px;
+  color: grey;
+  font-size: 0.9em;
+  cursor: text;
+  transition: 0.3s ease;
+}
+
+.form label .input:placeholder-shown + span {
+  top: 15px;
+  font-size: 0.9em;
+}
+
+.form label .input:focus + span,.form label .input:valid + span {
+  top: 30px;
+  font-size: 0.7em;
+  font-weight: 600;
+}
+
+.form label .input:valid + span {
+  color: green;
+}
+
+.submit {
+  border: none;
+  outline: none;
+  background-color: royalblue;
+  padding: 10px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 16px;
+  transform: .3s ease;
+}
+
+.submit:hover {
+  background-color: rgb(56, 90, 194);
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(0.9);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+.form label .input {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 30px;
+}
+
+.form label select:focus {
+  border-color: royalblue;
+}
+
+</style>

@@ -1,31 +1,25 @@
 <template>
-  <div class="row justify-content-md-center mt-5">
-    <div class="col-4">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title mb-4">Sign In</h5>
-          <form @submit.prevent="loginAction">
-            <p v-if="validationErrors.NotApproved" class="text-center">
-              <small class="text-danger">{{ validationErrors['NotApproved'] }}</small>
-            </p>
-            <div v-for="field in formFields" :key="field.name" class="mb-3">
-              <label :for="field.name" class="form-label">{{ field.label }}</label>
-              <input v-model="formData[field.name]" :type="field.type" :id="field.name" :name="field.name" class="form-control" />
-              <div v-if="validationErrors[field.name]" class="flex flex-col">
-                <small class="text-danger">{{ validationErrors[field.name][0] }}</small>
-              </div>
-            </div>
-            <div class="d-grid gap-2">
-              <button :disabled="isSubmitting" type="submit" class="btn btn-primary btn-block">Login</button>
-              <p class="text-center">Don't have an account? <router-link to="/register">Register here</router-link></p>
-            </div>
-          </form>
-        </div>
+  <div class="row justify-content-md-center justify-content-center mt-5">
+  <form class="form" @submit.prevent="loginAction">
+    <p class="title">Login</p>
+    <p class="message">Welcome Back</p>
+     <div v-if="validationErrors.lenght > 0" class="flex flex-col">
+          <small class="text-danger">Not Valid Email or Password</small>
       </div>
+    <div v-for="field in formFields" :key="field.name" class="div">
+        <label>
+          <input v-model="formData[field.name]" :type="field.type" placeholder="" class="input" :required="true" >
+          <span>{{ field.label }}</span>
+        </label>
+        
     </div>
-  </div>
+   
+    <button :disabled="isSubmitting" type="submit" class="submit">Login</button>
+    <p>Don't have an account?<router-link to="/register">Sign in</router-link></p>
+  </form>
+    </div>
+
 </template>
-  
 <script>
 import { useAxios } from '../API/queries';
 
@@ -52,21 +46,18 @@ export default {
   },
   methods: {
     async loginAction() {
+      this.validationErrors= {}
       this.isSubmitting = true;
       const { loginAPI } = useAxios();
       try {
         const response = await loginAPI(this.formData);
         const userLoginInfo = await response.data;
-        console.log(userLoginInfo)
         if (userLoginInfo.status === 'success') {
           localStorage.setItem('token', userLoginInfo.authorisation.token);
           localStorage.setItem('user', JSON.stringify(userLoginInfo.user));
           const userType = userLoginInfo.user.user_type_id;
           this.$router.push(userType === 1 ? '/admin' : '/v1');
-        } else {
-          this.isSubmitting = false;
-          this.validationErrors = { NotApproved: userLoginInfo.status };
-        }
+        } 
       } catch (error) {
         this.isSubmitting = false;
         if (error.response.data.errors) {
@@ -77,3 +68,148 @@ export default {
   },
 };
 </script>
+<style>
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 400px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  position: relative;
+}
+.div{
+   position: relative;
+}
+.title {
+  font-size: 28px;
+  color: royalblue;
+  font-weight: 600;
+  letter-spacing: -1px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 30px;
+}
+
+.title::before,.title::after {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  left: 0px;
+  background-color: royalblue;
+}
+
+.title::before {
+  width: 18px;
+  height: 18px;
+  background-color: royalblue;
+}
+
+.title::after {
+  width: 18px;
+  height: 18px;
+  animation: pulse 1s linear infinite;
+}
+
+.message, .signin {
+  color: rgba(88, 87, 87, 0.822);
+  font-size: 14px;
+}
+
+.signin {
+  text-align: center;
+}
+
+.signin a {
+  color: royalblue;
+}
+
+.signin a:hover {
+  text-decoration: underline royalblue;
+}
+
+.flex {
+  display: flex;
+  width: 100%;
+  gap: 6px;
+}
+
+.form label {
+  width: 100%;
+
+}
+
+.form label .input {
+  width: 100%;
+  padding: 10px 10px 20px 10px;
+  outline: 0;
+  border: 1px solid rgba(105, 105, 105, 0.397);
+  border-radius: 10px;
+}
+
+.form label .input + span {
+  position: absolute;
+  left: 10px;
+  top: 15px;
+  color: grey;
+  font-size: 0.9em;
+  cursor: text;
+  transition: 0.3s ease;
+}
+
+.form label .input:placeholder-shown + span {
+  top: 15px;
+  font-size: 0.9em;
+}
+
+.form label .input:focus + span,.form label .input:valid + span {
+  top: 30px;
+  font-size: 0.7em;
+  font-weight: 600;
+}
+
+.form label .input:valid + span {
+  color: green;
+}
+
+.submit {
+  border: none;
+  outline: none;
+  background-color: royalblue;
+  padding: 10px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 16px;
+  transform: .3s ease;
+}
+
+.submit:hover {
+  background-color: rgb(56, 90, 194);
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(0.9);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+.form label .input {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 30px;
+}
+
+.form label select:focus {
+  border-color: royalblue;
+}
+
+</style>

@@ -1,9 +1,9 @@
 <template>
   <div class="row justify-content-md-center mt-5">
     <div class="col-4">
-      <div :class="{ 'card': mode === 'register' }">
+      <div :class="{ 'card': mode === 'Register' }">
         <div class="card-body">
-          <h5 class="card-title mb-4">{{ mode === 'register' ? 'Register' : 'Update Profile' }}</h5>
+          <h5 class="card-title mb-4" >{{ mode === 'Register' ? 'Register' : 'Update Profile' }}</h5>
           <form @submit.prevent="handleUserInfo">
             <div v-for="field in formFields" :key="field.name" class="mb-3">
               <label :for="field.name" class="form-label">{{ field.label }}</label>
@@ -17,8 +17,7 @@
             </div>
             <div class="d-grid gap-2">
               <button :disabled="isSubmitting" type="submit" class="btn btn-primary btn-block">{{ this.mode }}</button>
-              <p v-if="mode === 'register'" class="text-center">Have already an account <router-link to="/">Login here</router-link></p>
-              
+              <p v-if="mode === 'Register'" class="text-center">Have already an account <router-link to="/">Login here</router-link></p>
             </div>
           </form>
         </div>
@@ -91,8 +90,8 @@ export default {
         const response = await AddAndUpdateUserInfoAPI(this.formData,this.mode);
         const registerUser = await response.data;
         if (registerUser.status === "success") {
-          this.mode === 'register' ? 
-          this.$router.push('/login') :
+          this.mode === 'Register' ? 
+          this.$router.push('/') :
           localStorage.setItem('user', JSON.stringify(registerUser.data));
         }
       } catch (error) {
@@ -105,3 +104,4 @@ export default {
   },
 };
 </script>
+

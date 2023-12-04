@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div>Users Report</div>
+    <div class="header-title">Users Report</div>
     <UsersTable/>
   </main>
 </template>

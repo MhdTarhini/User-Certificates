@@ -1,16 +1,16 @@
 <template>
-  <div class="d-flex align-items-center">
-    <div class="input-container">
+  <div class="d-flex align-items-center gap-3">
+    <div>
       <input
         v-model="newCertificateType"
         placeholder="New certificate Type"
-        class="input-field"
+        class="input-certificate"
         type="text"
       />
-      <label for="input-field" class="input-label">New certificate Type</label>
-      <span class="input-highlight"></span>
     </div>
-    <button @click="addNewCertificateType">New</button>
+    <div>
+      <button @click="addNewCertificateType" class="primary-btn new-type-btn">New</button>
+    </div>
   </div>
 </template>
 
@@ -42,4 +42,29 @@ export default {
 </script>
 
 <style>
+.input-certificate {
+ border: none;
+ padding: 8px;
+ border-radius: 5px;
+ background: #e8e8e8;
+ transition: 0.3s;
+}
+
+.input-certificate:focus {
+ outline-color: #e8e8e8;
+ background: #e8e8e8;
+ box-shadow: inset 20px 20px 60px #c5c5c5,
+		inset -20px -20px 60px #ffffff;
+ transition: 0.3s;
+}
+.new-type-btn{
+  border-radius: 5px;
+  background-color: rgb(73, 230, 34);
+  box-shadow: rgb(27, 68, 5) 0px 4px 0px 0px;
+}
+
+.new-type-btn::before{
+    background-color: rgb(46, 255, 77);
+}
+
 </style>

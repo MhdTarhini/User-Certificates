@@ -1,12 +1,8 @@
 <template>
-      <div class="row justify-content-md-center">
-        <div class="col-12">
-            <Navbar/>
-            <div class="container mt-5">
-                <router-view></router-view>
-            </div>
-        </div>
-      </div>
+    <Navbar/>
+    <div class="container mt-5">
+        <router-view></router-view>
+    </div>
 </template>
   
 <script>

@@ -1,7 +1,7 @@
 <template>
   <main>
-    <div>certificates Report</div>
-    <div class="d-flex flex-column">
+    <div class="header-title">Certificates Report</div>
+    <div class="d-flex flex-column gap-4">
       <AddCertificateType @certificateAdded="addCertificate" />
       <CertificatesReport :certificates="certificates" />
     </div>
@@ -45,4 +45,5 @@ export default {
   }
 };
 </script>
+
 

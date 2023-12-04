@@ -3,5 +3,7 @@ import UserDataForm from '../components/UserDataForm.vue'
 </script>
 
 <template>
-        <UserDataForm mode="Update"/>
+        <main class="center">
+                <UserDataForm mode="Update"/>
+        </main>
 </template>

@@ -1,12 +1,11 @@
 <template>
-  <div class="row justify-content-md-center justify-content-center mt-5">
   <form class="form" @submit.prevent="loginAction">
     <p class="title">Login</p>
     <p class="message">Welcome Back</p>
-     <div v-if="validationErrors.lenght > 0" class="flex flex-col">
+     <div v-if="validationErrors.lenght > 0" class="flex">
           <small class="text-danger">Not Valid Email or Password</small>
       </div>
-    <div v-for="field in formFields" :key="field.name" class="div">
+    <div v-for="field in formFields" :key="field.name" class="div-fields">
         <label>
           <input v-model="formData[field.name]" :type="field.type" placeholder="" class="input" :required="true" >
           <span>{{ field.label }}</span>
@@ -17,7 +16,6 @@
     <button :disabled="isSubmitting" type="submit" class="submit">Login</button>
     <p>Don't have an account?<router-link to="/register">Sign in</router-link></p>
   </form>
-    </div>
 
 </template>
 <script>

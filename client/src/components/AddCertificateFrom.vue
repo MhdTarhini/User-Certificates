@@ -1,21 +1,27 @@
 <template>
-        <div class="card-body">
-          <form @submit.prevent="addCertificateAction">
-            <div v-for="field in formFields" :key="field.name" class="mb-3">
-              <label :for="field.name" class="form-label">{{ field.label }}</label>
-              <select v-if="field.type === 'select'" v-model="formData[field.name]" :id="field.name" :name="field.name" class="form-select">
-                <option v-for="option in field.options" :key="option.value" :value="option.value">{{ option.label }}</option>
-              </select>
-              <input v-else-if="field.type === 'text' || field.type === 'date'" :type="field.type" v-model="formData[field.name]" :id="field.name" :name="field.name" class="form-control">
-              <div v-if="validationErrors[field.name]" class="flex flex-col">
+  <form class="form" @submit.prevent="addCertificateAction">
+    <div v-for="field in formFields" :key="field.name" class="div-fields">
+      <template v-if="field.type === 'text'|| field.type === 'date'">
+        <label>
+          <input :type="field.type" v-model="formData[field.name]" :id="field.name" :name="field.name" placeholder="" class="input" :required=true>
+          <span >{{ field.label }}</span>
+        </label>
+        <div v-if="validationErrors[field.name]" class="flex">
                 <small class="text-danger">{{ validationErrors[field.name][0] }}</small>
               </div>
-            </div>
-            <div class="d-grid gap-2">
-              <button :disabled="isSubmitting" type="submit" class="btn btn-primary btn-block">Save</button>
-            </div>
-          </form>
-      </div>
+      </template>
+      <template v-if="field.type === 'select'">
+        <label>
+          <select v-model="formData[field.name]" class="input" :required="true">
+            <option v-for="option in field.options" :key="option.value" :value="option.value">{{ option.label }}</option>
+          </select>
+          <span>{{ field.label }}</span>
+        </label>
+      </template>
+    </div>
+    <button :disabled="isSubmitting" type="submit" class="submit">Save</button>
+  </form>
+
 </template>
 
 <script>
@@ -83,3 +89,10 @@ export default {
   },
 };
 </script>
+<style>
+input[type=date]:required:invalid::-webkit-datetime-edit {
+    color: transparent;
+}
+input[type=date]:focus::-webkit-datetime-edit {
+    color: black !important;
+}</style>

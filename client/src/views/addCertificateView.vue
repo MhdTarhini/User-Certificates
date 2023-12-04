@@ -1,10 +1,9 @@
-<template>
-  <div class="row justify-content-md-center mt-5">
-    <h2 class="text-center p-3">Add Certificate</h2>
-    <div class="col-4">
-        <AddCertificateFrom/>
-    </div>
-  </div>
+<template >
+  <main class="center">
+    <div class="header-title">Add Certificate</div>
+    <AddCertificateFrom/>
+
+  </main>
 </template>
 
 <script>

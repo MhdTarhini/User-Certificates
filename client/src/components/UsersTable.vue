@@ -20,7 +20,7 @@
         <td>{{ user.gender }}</td>
         <td>{{ user.last_login ? user.last_login : "-"}}</td>
         <td :class="{'approved' :user.is_approved==1}">
-            <button v-if="user.is_approved !== 1" @click="approveUser(user)" class="primary-btn approve-btn">
+            <button v-if="user.is_approved !== 1" @click="approveUser(user)" class="submit">
               Approve
             </button>
             <div v-else >
@@ -84,14 +84,6 @@ th {
   background-color: #f2f2f2;
 }
 
-.approve-btn{
-  background-color: rgb(34, 158, 230);
-  box-shadow: rgb(18, 95, 121) 0px 4px 0px 0px;
-}
-
-.approve-btn::before{
-    background-color: rgb(46, 157, 255);
-}
 .approved{
   color: rgb(14, 190, 14);
 }

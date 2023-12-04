@@ -2,14 +2,23 @@ main {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  justify-content: center;
+  margin: 50px;
+}
+  
+.center {
+  align-items: center;
 }
 .header-title {
-  color: #000;
+  color: royalblue;
   font-size: 32px;
   font-weight: 600;
   line-height: normal;
+  
 }
-
+.header-title::first-letter {
+  text-transform: capitalize;
+}
 /*========================*/
 /* button */
 .primary-btn {
@@ -24,6 +33,7 @@ main {
   transition: all .3s ease-in-out;
   z-index: 1;
   overflow: hidden;
+  color: royalblue;
 }
 
 .primary-btn::before {
@@ -48,6 +58,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 400px;
   max-width: 400px;
   background-color: #fff;
   padding: 20px;
@@ -55,7 +66,7 @@ main {
   position: relative;
 }
 
-.div {
+.div-fields {
   position: relative;
 }
 

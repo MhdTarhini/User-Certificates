@@ -9,7 +9,7 @@
       />
     </div>
     <div>
-      <button @click="addNewCertificateType" class="primary-btn new-type-btn">New</button>
+      <button @click="addNewCertificateType" class="submit">New</button>
     </div>
   </div>
 </template>
@@ -54,19 +54,7 @@ export default {
 
 .input-certificate:focus {
  outline-color: #e8e8e8;
- background: #e8e8e8;
- box-shadow: inset 20px 20px 60px #c5c5c5,
-		inset -20px -20px 60px #ffffff;
+ box-shadow: inset 20px 20px 60px #c5c5c5;
  transition: 0.3s;
 }
-.new-type-btn{
-  border-radius: 5px;
-  background-color: rgb(73, 230, 34);
-  box-shadow: rgb(27, 68, 5) 0px 4px 0px 0px;
-}
-
-.new-type-btn::before{
-    background-color: rgb(46, 255, 77);
-}
-
 </style>

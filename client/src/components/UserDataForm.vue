@@ -1,15 +1,14 @@
 <template>
-  <div class="row justify-content-md-center justify-content-center mt-5">
   <form class="form" @submit.prevent="handleUserInfo">
     <p class="title">{{ mode === 'Register' ? 'Register' : 'Update Profile' }}</p>
     <p class="message">{{ mode === 'Register' ? 'Signup now and get full access to our app.' : 'Update your profile information.' }}</p>
-    <div v-for="field in formFields" :key="field.name" class="div">
+    <div v-for="field in formFields" :key="field.name" class="div-fields">
       <template v-if="field.type === 'text' || field.type === 'email' || field.type === 'password'" >
         <label>
           <input v-model="formData[field.name]" :type="field.type" placeholder="" class="input" :required="mode === 'Register' ? true : false">
           <span>{{ field.label }}</span>
         </label>
-        <div v-if="validationErrors[field.name]" class="flex flex-col">
+        <div v-if="validationErrors[field.name]" class="flex">
                 <small class="text-danger">{{ validationErrors[field.name][0] }}</small>
               </div>
       </template>
@@ -27,7 +26,6 @@
     <button :disabled="isSubmitting" type="submit" class="submit">{{ mode }}</button>
     <p v-if="mode === 'Register'" class="signin">Already have an account?<router-link to="/">Sign in</router-link></p>
   </form>
-    </div>
 
 </template>
 <script>

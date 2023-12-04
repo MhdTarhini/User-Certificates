@@ -10,7 +10,7 @@ class UserCertificateDetails extends Model
     use HasFactory;
     protected $fillable = [
         'user_certificate_id',
-        'name',
+        'major',
         'university',
         'date_achieved'
     ];

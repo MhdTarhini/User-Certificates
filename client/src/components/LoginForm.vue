@@ -2,7 +2,7 @@
   <form class="form" @submit.prevent="loginAction">
     <p class="title">Login</p>
     <p class="message">Welcome back !!</p>
-     <div v-if="validationErrors.lenght > 0" class="flex">
+     <div v-if="validationErrors===true" class="flex">
           <small class="text-danger">Not Valid Email or Password</small>
       </div>
     <div v-for="field in formFields" :key="field.name" class="div-fields">
@@ -10,9 +10,7 @@
           <input v-model="formData[field.name]" :type="field.type" placeholder="" class="input" :required="true" >
           <span>{{ field.label }}</span>
         </label>
-        
     </div>
-
     <ButtonComponents :isLoading="isloading" :isSubmitting="isSubmitting" :buttonText="'Login'" />
     <p class="signin">Don't have an account?<router-link to="/register" class="ms-2">Register</router-link></p>
   </form>
@@ -20,7 +18,7 @@
 </template>
 <script>
 import { useAxios } from '../API/queries';
-import ButtonComponents from './ButtonComponent.vue'
+import ButtonComponents from './common/ButtonComponent.vue'
 
 export default {
   name: 'LoginForm',
@@ -34,7 +32,7 @@ export default {
         password: '',
       },
       isloading:false,
-      validationErrors: {},
+      validationErrors: false,
       isSubmitting: false,
       formFields: [
         { name: 'email', label: 'Email address', type: 'email' },
@@ -63,15 +61,29 @@ export default {
           setTimeout(()=>{
             this.isloading=false
             this.$router.push(userType === 1 ? '/admin' : '/v1');
-          },2000)
-        } 
-      } catch (error) {
-        this.isSubmitting = false;
-        if (error.response.data.errors) {
-          this.validationErrors = error.response.data.errors;
+          },1000)
+        }else{
+          this.isloading=false
+         this.validationErrors = true;
         }
+      } catch (error) {
+        this.isloading=false
+        this.validationErrors = true;
+
       }
     },
   },
+  watch: {
+  'formData.email'(newVal, oldVal) {
+    if (newVal !== oldVal && newVal.includes('@')) {
+      this.isSubmitting = false; 
+    }
+  },
+  'formData.password'(newVal, oldVal) {
+    if (newVal !== oldVal && newVal.length > 6)  {
+      this.isSubmitting = false; 
+    }
+  },
+},
 };
 </script>

@@ -8,6 +8,12 @@
       :deleteCertificate="deleteCertificate"
     />
   </div>
+  <div v-if="userCertificates.length===0">
+      <div className="page-empty">
+        <div className="empty-title">No Certificates</div>
+        <router-link to="/add-certificate" class="submit nav-link text-white">Add Certificate</router-link>
+      </div>
+    </div>
 </template>
 
 <script>
@@ -33,6 +39,7 @@ export default {
         try {
             const response = await getUserCertificates();
             const userCertificates=await response.data
+            console.log(userCertificates)
             if(userCertificates.status=="success"){
                 this.userCertificates = userCertificates.data
             }
@@ -52,3 +59,31 @@ export default {
   },
 };
 </script>
+<style>
+.page-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    border-radius: 8px;
+    width: 600px;
+    position: absolute;
+    top: 300px;
+    left: 500px;
+}
+
+.empty-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.empty-text {
+    font-size: 16px;
+    color: #777;
+    text-align: center;
+    max-width: 300px;
+    margin-bottom: 20px;
+}</style>

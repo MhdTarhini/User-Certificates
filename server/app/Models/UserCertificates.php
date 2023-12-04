@@ -33,7 +33,7 @@ class UserCertificates extends Model
         return $certificate? $certificate->name : '';
     }
     public function getUserCertificateDetailsAttribute(){
-        $certificate = $this->userCertificateDetails()->select('name','university','date_achieved')->first(); 
+        $certificate = $this->userCertificateDetails()->select('major','university','date_achieved')->first(); 
         return $certificate;
     }
 

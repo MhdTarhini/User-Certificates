@@ -32,7 +32,7 @@
 <script>
 import { useAxios } from '../API/queries';
 import { successNotification , errorNotification} from './notification/ToastNotification';
-import ButtonComponents from './ButtonComponent.vue'
+import ButtonComponents from './common/ButtonComponent.vue'
 
 
 export default {
@@ -106,7 +106,7 @@ export default {
               localStorage.setItem('user', JSON.stringify(registerUser.data)) 
               successNotification("Your Profile Is Updated");
             }
-          },2000)
+          },1000)
           }
         } catch (error) {
           if (error.response.data.errors !== undefined) {

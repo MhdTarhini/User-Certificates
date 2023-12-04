@@ -20,7 +20,7 @@ class CertificatesController extends Controller
     public function addCertificate(Request $request) {
 
     $request->validate([
-        'name' => 'required|string|max:255',
+        'major' => 'required|string|max:255',
         'certificateType' => 'required',
         'university' => 'required|string|max:255',
         'archievedDate' => 'required|date',
@@ -33,9 +33,9 @@ class CertificatesController extends Controller
         'certificate_id' => $request->certificateType,
     ]);
 
-    $newUserCertificateDetails = UserCertificateDetails::create([
+    UserCertificateDetails::create([
         'user_certificate_id' => $newUserCertificate->id,
-        'name' => $request->name,
+        'major' => $request->major,
         'university' => $request->university,
         'date_achieved' => $request->archievedDate,
     ]);

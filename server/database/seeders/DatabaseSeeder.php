@@ -31,9 +31,9 @@ class DatabaseSeeder extends Seeder
         ]));
 
         DB::table("users")->insert(([
-            'name'=>"mohamad",
-            'email'=>"mohamad@gmail.com",
-            'password'=>Hash::make('1234567'),
+            'name'=>"admin",
+            'email'=>"admin@gmail.com",
+            'password'=>Hash::make('admin123'),
             'gender'=>"male",
             'blood_type'=>'O+',
             "is_approved"=>1,

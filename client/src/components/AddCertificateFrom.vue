@@ -28,7 +28,7 @@
 <script>
 import { useAxios } from '../API/queries';
 import { successNotification } from './notification/ToastNotification';
-import ButtonComponents from './ButtonComponent.vue'
+import ButtonComponents from './common/ButtonComponent.vue'
 
 export default {
   name: 'addCertificateForm',
@@ -87,7 +87,7 @@ export default {
             archievedDate: '',
           };
           this.isSubmitting = false;
-          },2000)
+          },1000)
       } catch (error) {
         this.isSubmitting = false;
         if (error.response.data.errors !== undefined) {

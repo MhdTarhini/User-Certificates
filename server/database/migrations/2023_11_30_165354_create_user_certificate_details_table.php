@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_certificate_id');
             $table->foreign('user_certificate_id')->references('id')->on('user_certificates');
-            $table->string('name');
+            $table->string('major');
             $table->date('date_achieved');
             $table->string('university');
             $table->timestamps();

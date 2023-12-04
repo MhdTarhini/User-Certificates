@@ -8,10 +8,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0"  v-if="this.isAdmin">
             <li class="nav-item">
-                <router-link to="/admin" class="nav-link">User Report</router-link>
+                <router-link to="/admin" class="nav-link text-white">User Report</router-link>
             </li>
             <li class="nav-item">
-                <router-link to="/certificates_report" class="nav-link">Certificates Report</router-link>
+                <router-link to="/certificates_report" class="nav-link text-white">Certificates Report</router-link>
             </li>
         </ul>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0"  v-else>

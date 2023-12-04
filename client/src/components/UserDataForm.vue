@@ -24,7 +24,6 @@
         
       </template>
     </div>
-
     <button :disabled="isSubmitting" type="submit" class="submit">{{ mode }}</button>
     <p v-if="mode === 'Register'" class="signin">Already have an account?<router-link to="/">Sign in</router-link></p>
   </form>
@@ -33,8 +32,7 @@
 </template>
 <script>
 import { useAxios } from '../API/queries';
-import { useToast } from 'vue-toast-notification';
-import 'vue-toast-notification/dist/theme-sugar.css';
+import { successNotification , errorNotification} from './notification/ToastNotification';
 
 export default {
   name: 'RegisterForm',
@@ -43,9 +41,6 @@ export default {
       type: String,
       required: true,
     },
-  },
-  components: {
-    PulseLoader
   },
   data() {
     return {
@@ -76,6 +71,7 @@ export default {
       },
       validationErrors: {},
       isSubmitting: false,
+      valid:true
     };
   },
   created(){
@@ -91,173 +87,38 @@ export default {
   },
   methods: {
     async handleUserInfo() {
-      const toast = useToast();
-      this.isSubmitting = true;
+      this.isSubmitting= true
       const { AddAndUpdateUserInfoAPI } = useAxios();
-      
-      try {
-        const response = await AddAndUpdateUserInfoAPI(this.formData,this.mode);
-        const registerUser = await response.data;
-        this.isSubmitting = false;
-        if (registerUser.status === "success") {
-          toast.success('Your Profile Is Updated');
-          this.mode === 'Register' ? 
-          this.$router.push('/') :
-          localStorage.setItem('user', JSON.stringify(registerUser.data));
+        try {
+          const response = await AddAndUpdateUserInfoAPI(this.formData,this.mode);
+          const registerUser = await response.data;
+          if (registerUser.status === "success") {
+            if(this.mode === 'Register'){
+              this.$router.push('/') 
+            } else{
+              localStorage.setItem('user', JSON.stringify(registerUser.data)) 
+              successNotification("Your Profile Is Updated");
+            }
+          }
+        } catch (error) {
+          if (error.response.data.errors !== undefined) {
+            this.validationErrors = error.response.data.errors;
+            errorNotification(`There ${Object.keys(this.validationErrors).length} unvalid field`)
+          }
         }
-      } catch (error) {
-        this.isSubmitting = false;
-        if (error.response.data.errors !== undefined) {
-          this.validationErrors = error.response.data.errors;
-        }
-      }
     }
   },
-};
+  watch: {
+  'formData.email'(newVal, oldVal) {
+    if (this.validationErrors.email && newVal !== oldVal && newVal.includes('@')) {
+      this.isSubmitting = false; 
+    }
+  },
+  'formData.password'(newVal, oldVal) {
+    if (this.validationErrors.password && newVal !== oldVal && newVal.length > 6)  {
+      this.isSubmitting = false; 
+    }
+  },
+},
+}
 </script>
-
-<style>
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-width: 400px;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 20px;
-  position: relative;
-}
-.div{
-   position: relative;
-}
-.title {
-  font-size: 28px;
-  color: royalblue;
-  font-weight: 600;
-  letter-spacing: -1px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding-left: 30px;
-}
-
-.title::before,.title::after {
-  position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  border-radius: 50%;
-  left: 0px;
-  background-color: royalblue;
-}
-
-.title::before {
-  width: 18px;
-  height: 18px;
-  background-color: royalblue;
-}
-
-.title::after {
-  width: 18px;
-  height: 18px;
-  animation: pulse 1s linear infinite;
-}
-
-.message, .signin {
-  color: rgba(88, 87, 87, 0.822);
-  font-size: 14px;
-}
-
-.signin {
-  text-align: center;
-}
-
-.signin a {
-  color: royalblue;
-}
-
-.signin a:hover {
-  text-decoration: underline royalblue;
-}
-
-.flex {
-  display: flex;
-  width: 100%;
-  gap: 6px;
-}
-
-.form label {
-  width: 100%;
-
-}
-
-.form label .input {
-  width: 100%;
-  padding: 10px 10px 20px 10px;
-  outline: 0;
-  border: 1px solid rgba(105, 105, 105, 0.397);
-  border-radius: 10px;
-}
-
-.form label .input + span {
-  position: absolute;
-  left: 10px;
-  top: 15px;
-  color: grey;
-  font-size: 0.9em;
-  cursor: text;
-  transition: 0.3s ease;
-}
-
-.form label .input:placeholder-shown + span {
-  top: 15px;
-  font-size: 0.9em;
-}
-
-.form label .input:focus + span,.form label .input:valid + span {
-  top: 30px;
-  font-size: 0.7em;
-  font-weight: 600;
-}
-
-.form label .input:valid + span {
-  color: green;
-}
-
-.submit {
-  border: none;
-  outline: none;
-  background-color: royalblue;
-  padding: 10px;
-  border-radius: 10px;
-  color: #fff;
-  font-size: 16px;
-  transform: .3s ease;
-}
-
-.submit:hover {
-  background-color: rgb(56, 90, 194);
-}
-
-@keyframes pulse {
-  from {
-    transform: scale(0.9);
-    opacity: 1;
-  }
-
-  to {
-    transform: scale(1.8);
-    opacity: 0;
-  }
-}
-.form label .input {
-  appearance: none;
-  -webkit-appearance: none;
-  padding-right: 30px;
-}
-
-.form label select:focus {
-  border-color: royalblue;
-}
-
-</style>

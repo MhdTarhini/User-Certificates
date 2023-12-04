@@ -21,7 +21,16 @@ export default {
 </script>
 
 <style scoped>
+
 .card {
+  position: relative;
   width: 18rem;
+  border-radius: 23px;
+  transition: all 0.8s cubic-bezier(0.15, 0.83, 0.66, 1);
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.05);
 }
 </style>

@@ -33,7 +33,8 @@
 </template>
 <script>
 import { useAxios } from '../API/queries';
-
+import { useToast } from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 
 export default {
   name: 'RegisterForm',
@@ -42,6 +43,9 @@ export default {
       type: String,
       required: true,
     },
+  },
+  components: {
+    PulseLoader
   },
   data() {
     return {
@@ -94,8 +98,9 @@ export default {
       try {
         const response = await AddAndUpdateUserInfoAPI(this.formData,this.mode);
         const registerUser = await response.data;
+        this.isSubmitting = false;
         if (registerUser.status === "success") {
-          toast.success('You did it!');
+          toast.success('Your Profile Is Updated');
           this.mode === 'Register' ? 
           this.$router.push('/') :
           localStorage.setItem('user', JSON.stringify(registerUser.data));

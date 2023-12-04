@@ -20,6 +20,8 @@
 
 <script>
 import { useAxios } from '../API/queries';
+import { useToast } from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 
 export default {
   name: 'addCertificateForm',
@@ -60,9 +62,11 @@ export default {
     },
     async addCertificateAction() {
        const {addCertificateAPI}=useAxios()
+      const toast=useToast()
        this.isSubmitting = true;
       try {
         await addCertificateAPI(this.formData)
+        toast.success("Completed !")
         this.formData = {
         name: '',
         university: '',

@@ -16,6 +16,8 @@
 
 <script>
 import {useAxios} from '../API/queries';
+import { useToast } from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 
 export default {
   name: "AddCertificateType",
@@ -28,9 +30,11 @@ export default {
   methods: {
       async addNewCertificateType() {
         const {addNewCertificateTypeAPI}=useAxios()
+        const toast=useToast()
         try {
             const response = await addNewCertificateTypeAPI(this.newCertificateType)
             const newCertificate = await response.data;
+            toast.success("Completed !")
             this.$emit('certificateAdded', newCertificate.data);
             this.newCertificateType = '';
         } catch (error) {

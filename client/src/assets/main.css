@@ -21,35 +21,19 @@ main {
 }
 /*========================*/
 /* button */
-.primary-btn {
-  position: relative;
-  border-radius: 5px;
-  background-repeat: no-repeat;
-  box-sizing: border-box;
-  width: 100%;
-  color: #fff;
+.submit {
   border: none;
-  font-size: 20px;
-  transition: all .3s ease-in-out;
-  z-index: 1;
-  overflow: hidden;
-  color: royalblue;
+  outline: none;
+    background-color: royalblue;
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+    transform: .3s ease;
 }
 
-.primary-btn::before {
-  content: "";
-  width: 0;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  transition: width 700ms ease-in-out;
-  display: inline-block;
-}
-
-.primary-btn:hover::before {
-  width: 100%;
+.submit:hover {
+  background-color: rgb(56, 90, 194);
 }
 /*========================*/
 /* Login & Register & Updated Forms */
@@ -167,20 +151,7 @@ main {
   color: green;
 }
 
-.submit {
-  border: none;
-  outline: none;
-  background-color: royalblue;
-  padding: 10px;
-  border-radius: 10px;
-  color: #fff;
-  font-size: 16px;
-  transform: .3s ease;
-}
 
-.submit:hover {
-  background-color: rgb(56, 90, 194);
-}
 
 @keyframes pulse {
   from {
@@ -194,13 +165,7 @@ main {
   }
 }
 
-.form label .input {
-  appearance: none;
-  -webkit-appearance: none;
-  padding-right: 30px;
-}
-
-.form label select:focus {
+.form label .input:focus {
   border-color: royalblue;
 }
 

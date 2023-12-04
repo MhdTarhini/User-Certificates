@@ -19,7 +19,8 @@
         </label>
       </template>
     </div>
-    <button :disabled="isSubmitting" type="submit" class="submit">Save</button>
+    <ButtonComponents :isLoading="isloading" :isSubmitting="isSubmitting" :buttonText="'Save'" />
+
   </form>
 
 </template>
@@ -27,24 +28,28 @@
 <script>
 import { useAxios } from '../API/queries';
 import { successNotification } from './notification/ToastNotification';
-
+import ButtonComponents from './ButtonComponent.vue'
 
 export default {
   name: 'addCertificateForm',
+   components: {
+    ButtonComponents
+  },
   data() {
     return {
       formFields: [
         { name: 'certificateType', label: 'Certificate Type', type: 'select', options: []},
-        { name: 'name', label: 'Name', type: 'text' },
+        { name: 'major', label: 'Major', type: 'text' },
         { name: 'university', label: 'University', type: 'text' },
         { name: 'archievedDate', label: 'Archieved date', type: 'date' },
       ],
       formData: {
-        name: '',
+        major: '',
         university: '',
         certificateType: '',
         archievedDate: '',
       },
+      isloading:false,
       validationErrors: {},
       isSubmitting: false,
     };
@@ -69,16 +74,20 @@ export default {
     async addCertificateAction() {
        const {addCertificateAPI}=useAxios()
        this.isSubmitting = true;
+        this.isloading=true
       try {
         await addCertificateAPI(this.formData)
-        successNotification("Completed !")
-        this.formData = {
-        name: '',
-        university: '',
-        certificateType: '',
-        archievedDate: '',
-      };
-      this.isSubmitting = false;
+        setTimeout(()=>{
+            this.isloading=false
+            successNotification("Completed !")
+            this.formData = {
+              major: '',
+              university: '',
+            certificateType: '',
+            archievedDate: '',
+          };
+          this.isSubmitting = false;
+          },2000)
       } catch (error) {
         this.isSubmitting = false;
         if (error.response.data.errors !== undefined) {

@@ -1,7 +1,7 @@
 <template>
   <form class="form" @submit.prevent="loginAction">
     <p class="title">Login</p>
-    <p class="message">Welcome Back</p>
+    <p class="message">Welcome back !!</p>
      <div v-if="validationErrors.lenght > 0" class="flex">
           <small class="text-danger">Not Valid Email or Password</small>
       </div>
@@ -12,23 +12,28 @@
         </label>
         
     </div>
-   
-    <button :disabled="isSubmitting" type="submit" class="submit">Login</button>
-    <p>Don't have an account?<router-link to="/register">Sign in</router-link></p>
+
+    <ButtonComponents :isLoading="isloading" :isSubmitting="isSubmitting" :buttonText="'Login'" />
+    <p class="signin">Don't have an account?<router-link to="/register" class="ms-2">Register</router-link></p>
   </form>
 
 </template>
 <script>
 import { useAxios } from '../API/queries';
+import ButtonComponents from './ButtonComponent.vue'
 
 export default {
   name: 'LoginForm',
+  components: {
+      ButtonComponents
+    },
   data() {
     return {
       formData: {
         email: '',
         password: '',
       },
+      isloading:false,
       validationErrors: {},
       isSubmitting: false,
       formFields: [
@@ -44,6 +49,7 @@ export default {
   },
   methods: {
     async loginAction() {
+      this.isloading = true
       this.validationErrors= {}
       this.isSubmitting = true;
       const { loginAPI } = useAxios();
@@ -54,7 +60,10 @@ export default {
           localStorage.setItem('token', userLoginInfo.authorisation.token);
           localStorage.setItem('user', JSON.stringify(userLoginInfo.user));
           const userType = userLoginInfo.user.user_type_id;
-          this.$router.push(userType === 1 ? '/admin' : '/v1');
+          setTimeout(()=>{
+            this.isloading=false
+            this.$router.push(userType === 1 ? '/admin' : '/v1');
+          },2000)
         } 
       } catch (error) {
         this.isSubmitting = false;

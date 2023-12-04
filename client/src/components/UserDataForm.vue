@@ -23,14 +23,17 @@
         
       </template>
     </div>
-    <button :disabled="isSubmitting" type="submit" class="submit">{{ mode }}</button>
-    <p v-if="mode === 'Register'" class="signin">Already have an account?<router-link to="/">Sign in</router-link></p>
+    <ButtonComponents :isLoading="isloading" :isSubmitting="isSubmitting" :buttonText="mode" />
+
+    <p v-if="mode === 'Register'" class="signin">Already have an account?<router-link to="/" class="ms-2">Sign in</router-link></p>
   </form>
 
 </template>
 <script>
 import { useAxios } from '../API/queries';
 import { successNotification , errorNotification} from './notification/ToastNotification';
+import ButtonComponents from './ButtonComponent.vue'
+
 
 export default {
   name: 'RegisterForm',
@@ -39,6 +42,9 @@ export default {
       type: String,
       required: true,
     },
+  },
+  components: {
+    ButtonComponents
   },
   data() {
     return {
@@ -67,9 +73,9 @@ export default {
         bloodType: '',
         gender: '',
       },
+      isloading:false,
       validationErrors: {},
       isSubmitting: false,
-      valid:true
     };
   },
   created(){
@@ -85,18 +91,22 @@ export default {
   },
   methods: {
     async handleUserInfo() {
+      this.isloading = true
       this.isSubmitting= true
       const { AddAndUpdateUserInfoAPI } = useAxios();
         try {
           const response = await AddAndUpdateUserInfoAPI(this.formData,this.mode);
           const registerUser = await response.data;
           if (registerUser.status === "success") {
+            setTimeout(()=>{
+            this.isloading=false
             if(this.mode === 'Register'){
               this.$router.push('/') 
             } else{
               localStorage.setItem('user', JSON.stringify(registerUser.data)) 
               successNotification("Your Profile Is Updated");
             }
+          },2000)
           }
         } catch (error) {
           if (error.response.data.errors !== undefined) {
@@ -104,6 +114,8 @@ export default {
             errorNotification(`There ${Object.keys(this.validationErrors).length} unvalid field`)
           }
         }
+      this.isSubmitting = false; 
+
     }
   },
   watch: {

@@ -91,6 +91,7 @@ export default {
   },
   methods: {
     async handleUserInfo() {
+      this.validationErrors={},
       this.isloading = true
       this.isSubmitting= true
       const { AddAndUpdateUserInfoAPI } = useAxios();
@@ -109,13 +110,15 @@ export default {
           },1000)
           }
         } catch (error) {
+            this.isloading=false
           if (error.response.data.errors !== undefined) {
             this.validationErrors = error.response.data.errors;
             errorNotification(`There ${Object.keys(this.validationErrors).length} unvalid field`)
           }
         }
-      this.isSubmitting = false; 
-
+        if(Object.keys(this.validationErrors).length==0){
+          this.isSubmitting = false; 
+        }
     }
   },
   watch: {

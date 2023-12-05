@@ -1,6 +1,6 @@
 <template>
     <main>
-            <div class="header-title">{{user?.name}}'s Certificates !</div>
+            <div class="header-title">{{user?.name}}'s Certificates</div>
             <CertificateContainer/>
       </main>
 </template>

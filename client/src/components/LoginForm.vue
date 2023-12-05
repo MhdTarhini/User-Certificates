@@ -2,8 +2,8 @@
   <form class="form" @submit.prevent="loginAction">
     <p class="title">Login</p>
     <p class="message">Welcome back !!</p>
-     <div v-if="validationErrors===true" class="flex">
-          <small class="text-danger">Not Valid Email or Password</small>
+     <div v-if="validationErrors===true">
+          <small class="text-danger error">Not Valid Email or Password</small>
       </div>
     <div v-for="field in formFields" :key="field.name" class="div-fields">
         <label>

@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-body d-flex flex-column align-item-center">
-      <h5 class="card-title text-primary-emphasis fs-3">{{ certificate.certificate_name }}</h5>
+      <h5 class="card-title text-black fs-3">{{ certificate.certificate_name }}</h5>
       <h6 class="card-subtitle mb-2 text-black"><span class="signin">Major : </span>{{ certificate.user_certificate_details.major }}</h6>
       <h6 class="card-subtitle mb-2 text-black"><span class="signin">University : </span>{{ certificate.user_certificate_details.university }}</h6>
       <h6 class="card-subtitle mb-2 text-black"><span class="signin">Date : </span>{{ certificate.user_certificate_details.date_achieved }}</h6>

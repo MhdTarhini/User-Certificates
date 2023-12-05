@@ -12,12 +12,18 @@ main {
 .header-title {
   color: royalblue;
   font-size: 32px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: normal;
+  font-family: sans-serif;
   
 }
 .header-title::first-letter {
   text-transform: capitalize;
+}
+.error {
+  position: absolute;
+  top: 120px;
+  font-size: 13px;
 }
 /*========================*/
 /* button */

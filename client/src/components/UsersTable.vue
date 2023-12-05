@@ -19,11 +19,11 @@
         <td>{{ user.blood_type }}</td>
         <td>{{ user.gender }}</td>
         <td>{{ user.last_login ? user.last_login : "-"}}</td>
-        <td :class="{'approved' :user.is_approved==1}">
+        <td >
             <button v-if="user.is_approved !== 1" @click="approveUser(user)" class="submit">
               Approve
             </button>
-            <div v-else >
+            <div v-else class='approved' >
             <CheckMarker/> APRROVED
             </div>
         </td>
@@ -86,6 +86,7 @@ th {
 
 .approved{
   color: rgb(14, 190, 14);
+  padding: 5px 0px;
 }
 
 </style>
